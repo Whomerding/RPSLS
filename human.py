@@ -6,7 +6,7 @@ class Human (Player):
         self.name = "Player"
     
     def create_name (self):
-        self.name = input("What is your name?")
+        self.name = input("What is your name?\n")
 
   
         
