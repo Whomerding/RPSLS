@@ -4,8 +4,9 @@ class Player:
         self.number_of_wins = 0
         self.name = ""
         self.choice = ""
-    def make_a_choice (self):
-        self.choice = input ("Choose: Rock, Paper, Scissors, Lizard, or Spock by typing your input below.\n")
+    def make_a_choice (self, name):
+        self.name = name
+        self.choice = input (f"{self.name} choose: Rock, Paper, Scissors, Lizard, or Spock by typing your input below.\n")
         return (self.choice)
     
 

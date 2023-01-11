@@ -3,6 +3,7 @@ from ai import Ai
 from time import sleep
 import validate
 
+
 class Game:
     def __init__(self):
         self.player_one = Human ()
@@ -12,6 +13,7 @@ class Game:
         self.how_many_players ()
         self.play_phase ()
         self.win ()
+        self.play_again ()
         
    
     def welcome (self):
@@ -19,7 +21,8 @@ class Game:
         for item in rules:
             print (item)
             sleep (.25)
-        play = input ("Would you like to play? yes or no")
+        play = input ("Would you like to play? yes or no\n")
+        play = validate.valid_input_yes_no (play)
         if play == "yes":
             print ("Great!  Lets begin!")
             self.player_one.create_name ()
@@ -29,36 +32,43 @@ class Game:
 
     def how_many_players (self):
         self.number_of_players = input ("How many players will be playing the game? Enter 1 or 2")
+        self.number_of_players = validate.valid_input_num_players (self.number_of_players)
         if self.number_of_players == "1":
             self.ai_player = Ai ()
         elif self.number_of_players == "2":
             self.player_two = Human ()
             print ("Welcome new player!")
-            self.player_one.create_name ()
+            self.player_two.create_name ()
 
     def play_phase (self):
         self.has_won = ""
         self.player_one_choice = ""
         if self.number_of_players == "1":
             while self.ai_player.number_of_wins < 2 and self.player_one.number_of_wins <2:
-                self.player_one.choice = self.player_one.make_a_choice ()
+                self.player_one.choice = self.player_one.make_a_choice (self.player_one.name)
+                self.player_one.choice = validate.valid_input_choice (self.player_one.choice)
                 print (f"{self.player_one.name} chose {self.player_one.choice}.")
                 self.ai_player.choice = self.ai_player.make_a_choice ()
-                print (f"AI chose {self.ai_player.choice}. ")
+                self.ai_player.choice = validate.valid_input_choice (self.ai_player.choice)
+                print (f"AI chose {self.ai_player.choice}./n ")
                 self.has_won = validate.eval_winner (self.player_one.choice, self.ai_player.choice, "")
                 if self.has_won == "this player":
-                    print (f"Congratulations {self.player_one.name}!  You win the round!")
+                    print (f"Congratulations {self.player_one.name}!  You win the round!\n")
                     self.player_one.number_of_wins += 1
                 elif self.has_won == "tie":
-                    print ("It's a tie!  No one wins!")
+                    print ("It's a tie!  No one wins!\n")
                 else:
-                    print ("The AI has bested you!  The AI wins the round!")
+                    print ("The AI has bested you!  The AI wins the round!\n")
                     self.ai_player.number_of_wins += 1
+                print (f"{self.player_one.name} has won {self.player_one.number_of_wins} rounds. \n The computer has won {self.ai_player.number_of_wins} rounds!\n")
+
         elif self.number_of_players == "2":
              while self.player_one.number_of_wins <2 and self.player_two.number_of_wins < 2:
-                self.player_one.choice = self.player_one.make_a_choice ()
+                self.player_one.choice = self.player_one.make_a_choice (self.player_one.name)
+                self.player_one.choice = validate.valid_input_choice (self.player_one.choice)
+                self.player_two.choice = self.player_two.make_a_choice (self.player_two.name)
+                self.player_two.choice = validate.valid_input_choice (self.player_two.choice)
                 print (f"{self.player_one.name} chose {self.player_one.choice}.")
-                self.player_two.choice = self.player_two.make_a_choice ()
                 print (f"{self.player_two.name} chose {self.player_two.choice}. ")
                 self.has_won = validate.eval_winner (self.player_one.choice, self.player_two.choice, "")
                 if self.has_won == "this player":
@@ -69,9 +79,32 @@ class Game:
                 else:
                     print (f"Congrats! {self.player_two.name}.  You win!")
                     self.player_two.number_of_wins += 1
-                    print (f"{self.player_one.name} has won {self.player_one.number_of_wins} rounds. \n {self.player_two.name} has won {self.player_two.number_of_wins} rounds!")
+                print (f"{self.player_one.name} has won {self.player_one.number_of_wins} rounds. \n {self.player_two.name} has won {self.player_two.number_of_wins} rounds!")
                           
     def win (self):
-        print ("Declare winner here")
+        if self.number_of_players == "1":
+            if self.player_one.number_of_wins == 2:
+                print (f"{self.player_one.name} is the champion!!")
+            else:
+                print (f"The AI has proven that computers are better than people!  You lose the AI wins!")
+        if self.number_of_players == "2":
+            if self.player_one.number_of_wins == 2:
+                print (f"{self.player_one.name} is victorious!!  Congratulations!!  Too bad, so sad {self.player_two.name}")
+            else:
+                print (f"{self.player_two.name} is victorious!!  Congratulations!!  Too bad, so sad {self.player_one.name}")
+    def play_again (self):
+        self.play_again = True
+        while self.play_again == True:
+            self.play_again_input = input ("Would you like to play again? yes or no?\n")
+            self.play_again_input = validate.valid_input_yes_no (self.play_again_input)
+            if self.play_again_input == "yes":
+                self.play_phase ()
+                self.play_again = True
+            else:
+                print("Goodbye")
+                self.play_again = False
+            
+
+
 
   
