@@ -21,7 +21,7 @@ class Game:
         for item in rules:
             print (item)
             sleep (.50)
-        play = input ("Would you like to play? Yes or no? \n")
+        play = input ("Would you like to play? yes or no? \n")
         play = validate.valid_input_yes_no (play)
         if play == "yes":
             print ("Great!  Lets begin!")
@@ -32,7 +32,7 @@ class Game:
           
 
     def how_many_players (self):
-        self.number_of_players = input ("How many players will be playing the game? Enter 1 or 2")
+        self.number_of_players = input ("How many players will be playing the game? Enter 1 or 2\n")
         self.number_of_players = validate.valid_input_num_players (self.number_of_players)
         if self.number_of_players == "1":
             self.ai_player = Ai ()
@@ -61,7 +61,7 @@ class Game:
                 else:
                     print ("The AI has bested you!  The AI wins the round!\n")
                     self.ai_player.number_of_wins += 1
-                print (f"{self.player_one.name} has won {self.player_one.number_of_wins} rounds.\nThe computer has won {self.ai_player.number_of_wins} rounds!\n")
+                print (f"{self.player_one.name} has won {self.player_one.number_of_wins} rounds.\nThe computer has won {self.ai_player.number_of_wins} rounds.\n")
 
         elif self.number_of_players == "2":
              while self.player_one.number_of_wins <2 and self.player_two.number_of_wins < 2:
@@ -73,14 +73,14 @@ class Game:
                 print (f"{self.player_two.name} chose {self.player_two.choice}. \n")
                 self.has_won = validate.eval_winner (self.player_one.choice, self.player_two.choice, "")
                 if self.has_won == "this player":
-                    print (f"Congratulations {self.player_one.name}!  You win the round\n")
+                    print (f"Congratulations {self.player_one.name}!  You win the round!\n")
                     self.player_one.number_of_wins += 1
                 elif self.has_won == "tie":
                     print ("It's a tie!  No one wins!\n")
                 else:
-                    print (f"Congrats! {self.player_two.name}.  You win!\n")
+                    print (f"Congrats! {self.player_two.name}.  You win the round!\n")
                     self.player_two.number_of_wins += 1
-                print (f"{self.player_one.name} has won {self.player_one.number_of_wins} rounds.\n{self.player_two.name} has won {self.player_two.number_of_wins} rounds!\n")
+                print (f"{self.player_one.name} has won {self.player_one.number_of_wins} rounds.\n{self.player_two.name} has won {self.player_two.number_of_wins} rounds.\n")
                           
     def win (self):
         if self.number_of_players == "1":
